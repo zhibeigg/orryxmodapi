@@ -1,48 +1,59 @@
-import io.izzel.taboolib.gradle.Basic
-import io.izzel.taboolib.gradle.Bukkit
-import io.izzel.taboolib.gradle.BukkitNMS
+@file:Suppress("PropertyName", "SpellCheckingInspection")
+
+import io.izzel.taboolib.gradle.*
 
 plugins {
-    `java-library`
-    kotlin("jvm") version "2.2.21"
+    java
+    kotlin("jvm") version "2.1.20"
     id("io.izzel.taboolib") version "2.0.27"
 }
 
-group = "org.minelegend.orryxmodapi"
-version = "1.0-SNAPSHOT"
+subprojects {
+    apply<JavaPlugin>()
+    apply(plugin = "io.izzel.taboolib")
+    apply(plugin = "org.jetbrains.kotlin.jvm")
 
-taboolib {
-    env {
-        install(Basic)
-        install(Bukkit)
-        install(BukkitNMS)
-    }
-    description {
-        name = "OrryxModAPI"
-        contributors {
-            name("zhibei")
+    configure<TabooLibExtension> {
+        env {
+            install(Basic)
+            install(Bukkit)
+            install(BukkitUtil)
+            install(BukkitFakeOp)
+            install(BungeeCord)
+            install(I18n)
+            install(CommandHelper)
+            install(MinecraftChat)
+            install(BukkitNMS)
         }
+        version { taboolib = "6.2.4-3b3cd67" }
     }
-    version { taboolib = "6.2.4-3b3cd67" }
+
+    // 仓库
+    repositories {
+        mavenCentral()
+    }
+
+    // 依赖
+    dependencies {
+        compileOnly(kotlin("stdlib"))
+        compileOnly(kotlin("reflect"))
+    }
+
+    kotlin {
+        jvmToolchain(8)
+    }
+
+    java {
+        withSourcesJar()
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    tasks.withType<JavaCompile> {
+        options.encoding = "UTF-8"
+    }
 }
 
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    compileOnly("ink.ptms.core:v12004:12004:mapped")
-    compileOnly("ink.ptms.core:v12004:12004:universal")
-    compileOnly("ink.ptms.core:v11200:11200")
-    compileOnly("ink.ptms:nms-all:1.0.0")
-
-    testImplementation(kotlin("test"))
-}
-
-kotlin {
-    jvmToolchain(8)
-}
-
-tasks.test {
-    useJUnitPlatform()
+gradle.buildFinished {
+    buildDir.deleteRecursively()
 }

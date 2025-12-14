@@ -1,4 +1,4 @@
-package org.minelegend.orryxmodapi
+package io.github.zhibei.org.minelegend.orryxmodapi
 
 import com.google.common.io.ByteArrayDataInput
 import com.google.common.io.ByteArrayDataOutput
@@ -10,6 +10,8 @@ import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.plugin.messaging.PluginMessageListener
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
+import taboolib.common.platform.Platform
+import taboolib.common.platform.PlatformSide
 import taboolib.common.platform.Plugin
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common.platform.function.submit
@@ -25,6 +27,7 @@ import java.util.function.Consumer
  * OrryxMod API - Java友好版本
  * 提供与OrryxMod客户端通信的API接口
  */
+@PlatformSide(Platform.BUKKIT)
 object OrryxModAPI : Plugin() {
 
     private const val CHANNEL_NAME = "orryxmod:main"
