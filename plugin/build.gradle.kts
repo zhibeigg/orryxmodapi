@@ -38,7 +38,7 @@ tasks.withType<Jar> {
 
 publishing {
     repositories {
-        maven("https://nexus.mcwar.cn/repository/maven-releases/") {
+        maven("https://jfrog.mcwar.cn/artifactory/maven-releases") {
             credentials {
                 username = publishUsername
                 password = publishPassword

@@ -14,6 +14,7 @@ import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
 import taboolib.common.platform.Plugin
 import taboolib.common.platform.event.SubscribeEvent
+import taboolib.common.platform.function.info
 import taboolib.common.platform.function.submit
 import taboolib.common.platform.function.warning
 import taboolib.module.nms.MinecraftVersion
@@ -68,12 +69,16 @@ object OrryxModAPI : Plugin() {
         val future: CompletableFuture<AimInfo>
     )
 
-    @Awake(LifeCycle.ENABLE)
+    override fun onEnable() {
+        registerChannels()
+    }
+
     private fun registerChannels() {
-        val messenger = Bukkit.getMessenger()
-        val plugin = BukkitPlugin.getInstance()
-        messenger.registerIncomingPluginChannel(plugin, CHANNEL_NAME, MessageReceiver())
-        messenger.registerOutgoingPluginChannel(plugin, CHANNEL_NAME)
+        with(Bukkit.getMessenger()) {
+            registerIncomingPluginChannel(BukkitPlugin.getInstance(), CHANNEL_NAME, MessageReceiver())
+            registerOutgoingPluginChannel(BukkitPlugin.getInstance(), CHANNEL_NAME)
+            info("channel: $CHANNEL_NAME 注册成功")
+        }
     }
 
     private fun clean() {
