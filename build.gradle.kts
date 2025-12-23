@@ -18,14 +18,11 @@ subprojects {
             install(Basic)
             install(Bukkit)
             install(BukkitUtil)
-            install(BukkitFakeOp)
             install(BungeeCord)
-            install(I18n)
             install(CommandHelper)
-            install(MinecraftChat)
             install(BukkitNMS)
         }
-        version { taboolib = "6.2.4-3b3cd67" }
+        version { taboolib = "6.2.4-65252583" }
     }
 
     // 仓库

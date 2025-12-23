@@ -1,4 +1,4 @@
-package io.github.zhibei.org.minelegend.orryxmodapi
+package org.minelegend.orryxmodapi
 
 import com.google.common.io.ByteArrayDataInput
 import com.google.common.io.ByteArrayDataOutput
@@ -12,7 +12,6 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.Platform
 import taboolib.common.platform.PlatformSide
-import taboolib.common.platform.Plugin
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common.platform.function.info
 import taboolib.common.platform.function.submit
@@ -29,7 +28,8 @@ import java.util.function.Consumer
  * 提供与OrryxMod客户端通信的API接口
  */
 @PlatformSide(Platform.BUKKIT)
-object OrryxModAPI : Plugin() {
+@Awake
+object OrryxModAPI {
 
     private const val CHANNEL_NAME = "orryxmod:main"
     internal val pendingRequests = ConcurrentHashMap<UUID, PendingRequest>()
@@ -69,10 +69,7 @@ object OrryxModAPI : Plugin() {
         val future: CompletableFuture<AimInfo>
     )
 
-    override fun onEnable() {
-        registerChannels()
-    }
-
+    @Awake(LifeCycle.ENABLE)
     private fun registerChannels() {
         with(Bukkit.getMessenger()) {
             registerIncomingPluginChannel(BukkitPlugin.getInstance(), CHANNEL_NAME, MessageReceiver())
